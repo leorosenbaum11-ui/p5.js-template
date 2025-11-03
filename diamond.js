@@ -1,19 +1,37 @@
+let theta
 let spinAngle
+let posX
+let hue
+let offset
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(0);
 	spinAngle = (PI/4)
+    posX = 0
+    theta = 0
+    hue = 165
+    offset = random(0, 1000)
 }
 
 function draw() {
+    hue = map(noise(offset), 0, 1, 130, 230)
+    colorMode(HSB)
 	push()
 	noFill()
-	stroke(255)
-	translate(width/2, height/2)
+	stroke(hue, 100, 100)
+	translate(posX, height/2)
 	rotate(spinAngle)
 	rectMode(CENTER)
-	square(0, 0, 200)
+    let sz = map(sin(theta), -1, 1, 20, 250)
+	square(0, 0, sz)
 
-    spinAngle += 0.01
+    spinAngle += 0.1
+    posX += 3
+    theta += 0.1
+    offset += 0.1
+}
+
+function mouseClicked() {
+    //noLoop()
 }
