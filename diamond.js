@@ -27,9 +27,9 @@ function draw() {
 	square(0, 0, sz)
 
     spinAngle += 0.1
-    posX += 3
-    theta += 0.1
-    offset += 0.1
+    posX += 0.1
+    theta += 0.5
+    offset += 0.5
 }
 
 function mouseClicked() {
