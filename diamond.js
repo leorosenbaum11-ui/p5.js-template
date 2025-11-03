@@ -30,9 +30,9 @@ function draw() {
     textSize(20)
     text("Hi Santiago I can see you", width/2, height/2)
 
-    spinAngle += 0.1
+    spinAngle += 0.5
     posX += 0.1
-    theta += 0.5
+    theta += 0.1
     offset += 0.5
 }
 
