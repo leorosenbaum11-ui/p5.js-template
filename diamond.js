@@ -25,6 +25,7 @@ function draw() {
 	rectMode(CENTER)
     let sz = map(sin(theta), -1, 1, 20, 250)
 	square(0, 0, sz)
+    text("Hi Santiago I can see you", width/2, height/2)
 
     spinAngle += 0.1
     posX += 0.1
