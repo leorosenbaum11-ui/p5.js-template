@@ -15,6 +15,7 @@ function setup() {
 }
 
 function draw() {
+    push()
     hue = map(noise(offset), 0, 1, 130, 230)
     colorMode(HSB)
 	push()
@@ -26,14 +27,15 @@ function draw() {
     let sz = map(sin(theta), -1, 1, 20, 250)
 	square(0, 0, sz)
 
-    stroke(255)
-    textSize(20)
-    text("Hi Santiago I can see you", width/2, height/2)
-
     spinAngle += 0.5
-    posX += 0.1
+    posX += 1
     theta += 0.1
     offset += 0.5
+    pop()
+
+    stroke(255)
+    textSize(20)
+    text("Hi santiago", width/2, height/2)
 }
 
 function mouseClicked() {
