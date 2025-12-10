@@ -4,6 +4,9 @@ const gravity = 9.81 / 60
 const groundY = 500 - 50
 const extraNudge = 0.01
 
+let objNumber
+let objName
+
 let physObj = []
 
 let player
@@ -13,14 +16,11 @@ function setup() {
 	background(100)
 
 	//phys objects
-	player = new Phys(width / 2, height - 100, 10, true, false)
+	player = new Phys(width / 2, height - 100, 10, true, false, true)
 	physObj.push(player)
 
-	newObj = new Phys(width/2, height/2, 10, false, true)
+	newObj = new Phys(width/2, height/2, 10, false, true, false)
 	physObj.push(newObj)
-
-	newObj2 = new Phys(width/2, height/2, 10, false, true)
-	physObj.push(newObj2)
 }
 
 function draw() {
@@ -33,15 +33,17 @@ function draw() {
 	rect(0, groundY, width, 50)
 	pop()
 
+	for (let otherObj of physObj){
+		otherObj.update()
+		otherObj.display()
+	}
+
 	//objects
-	player.update()
-	player.display()
+	//player.update()
+	//player.display()
 
-	newObj.update()
-	newObj.display()
-
-	newObj2.update()
-	newObj2.display()
+	//newObj.update()
+	//newObj.display()
 }
 
 function mouseClicked() {

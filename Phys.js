@@ -1,5 +1,5 @@
 class Phys {
-	constructor(startX, startY, objectRadius, isCon, stat) {
+	constructor(startX, startY, objectRadius, isCon, stat, bouncy) {
 		this.pos = createVector(startX, startY)
 		this.vel = createVector(0, 0)
 		this.acc = createVector(0, 0)
@@ -10,6 +10,7 @@ class Phys {
 		this.startY = startY
 		this.stat = stat
 		this.onObject = false
+		this.bouncy = bouncy
 	}
 	
 	update() {
@@ -81,8 +82,10 @@ class Phys {
 				this.onObject = true
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
-				this.vel.mult(-0.7, -0.7)
-				
+
+				if(this.bouncy && other.bouncy) {
+					this.vel.mult(-0.7, -0.7)
+				}
 
 				let overlap = (this.radius + other.radius) - distance
 				let separation = overlap + extraNudge
