@@ -19,7 +19,7 @@ function setup() {
 	player = new Phys(width / 2, height - 100, 10, true, false, true)
 	physObj.push(player)
 
-	newObj = new Phys(width/2, height/2, 10, false, true, true)
+	newObj = new Phys(width/2, height/2, 10, false, true, false)
 	physObj.push(newObj)
 }
 

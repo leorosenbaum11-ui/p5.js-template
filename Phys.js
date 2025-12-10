@@ -82,6 +82,12 @@ class Phys {
 				this.onObject = true
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
+				
+				if(!this.bouncy || !other.bouncy) {
+					if (!keyIsDown(87)) {
+						this.vel.set(0, 0)
+					}
+				}
 
 				if(this.bouncy && other.bouncy) {
 					this.vel.mult(-0.7, -0.7)
