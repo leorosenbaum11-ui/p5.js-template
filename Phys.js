@@ -1,16 +1,18 @@
 class Phys {
-	constructor(startX, startY, objectRadius, isCon, stat, bouncy) {
+	constructor(startX, startY, x, y, isCon, stat, bouncy, AABB) {
 		this.pos = createVector(startX, startY)
 		this.vel = createVector(0, 0)
 		this.acc = createVector(0, 0)
 		this.isGrounded = false
-		this.radius = objectRadius
+		this.x = x
+		this.y = y
 		this.isCon = isCon
 		this.startX = startX
 		this.startY = startY
 		this.stat = stat
 		this.onObject = false
 		this.bouncy = bouncy
+		this.AABB = AABB
 	}
 	
 	update() {
@@ -51,8 +53,8 @@ class Phys {
 		this.acc.set(0, 0) //reset acc
 
 		//boundary
-		if (this.pos.y - extraNudge >= groundY - this.radius) {
-			this.pos.y = groundY - this.radius
+		if (this.pos.y - extraNudge >= groundY - this.x) {
+			this.pos.y = groundY - this.x
 			this.vel.y = 0
 			this.acc.y = 0
 			this.isGrounded = true
@@ -78,7 +80,8 @@ class Phys {
 			let distance = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
 			if (other == this) {
 				continue
-			} else if (distance <= this.radius + other.radius) {
+			} else if (!this.AABB && !other.AABB &&
+						distance <= this.x + other.x) {
 				this.onObject = true
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
@@ -93,7 +96,38 @@ class Phys {
 					this.vel.mult(-0.7, -0.7)
 				}
 
-				let overlap = (this.radius + other.radius) - distance
+				let overlap = (this.x + other.x) - distance
+				let separation = overlap + extraNudge
+
+				let direction = p5.Vector.sub(this.pos, other.pos)
+
+				if (distance === 0) {
+					direction.set(1, 0)
+				} else {
+					direction.normalize()
+				}
+				this.pos.add(direction.mult(separation))
+			} else if (this.AABB && other.AABB &&
+						this.pos.x - this.x/2 <= other.pos.x + other.x/2 &&
+						this.pos.x + this.x/2 >= other.pos.x - other.x/2 &&
+						this.pos.y - this.y/2 <= other.pos.y + other.y/2 &&
+						this.pos.y + this.y/2 >= other.pos.y - other.y/2
+					) {
+						this.onObject = true
+				isOnObjectThisCheck = true;
+				this.acc.set(0, 0)
+				
+				if(!this.bouncy || !other.bouncy) {
+					if (!keyIsDown(87)) {
+						this.vel.set(0, 0)
+					}
+				}
+
+				if(this.bouncy && other.bouncy) {
+					this.vel.mult(-0.7, -0.7)
+				}
+
+				let overlap = (this.x + other.x) - distance
 				let separation = overlap + extraNudge
 
 				let direction = p5.Vector.sub(this.pos, other.pos)
@@ -118,10 +152,19 @@ class Phys {
 	}
 
 	display() {
-		push()
-		fill(255)
-		noStroke()
-		circle(this.pos.x, this.pos.y, this.radius * 2)
-		pop()
+		if(!this.AABB) {
+			push()
+			fill(255)
+			noStroke()
+			circle(this.pos.x, this.pos.y, this.x * 2)
+			pop()
+		}
+		if(this.AABB) {
+			push()
+			fill(255)
+			noStroke()
+			rect(this.pos.x, this.pos.y, this.x, this.y)
+			pop()
+		}
 	}
 }

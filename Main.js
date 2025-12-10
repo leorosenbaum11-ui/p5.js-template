@@ -14,12 +14,12 @@ let player
 function setup() {
 	createCanvas(1080, 500)
 	background(100)
-
+	//                width      height       rad  isCon stat, bouncy, AABB
 	//phys objects
-	player = new Phys(width / 2, height - 100, 10, true, false, true)
+	player = new Phys(width / 2, height - 100, 20, 20, true, false, true, true)
 	physObj.push(player)
 
-	newObj = new Phys(width/2, height/2, 10, false, true, false)
+	newObj = new Phys(width/2, height/2, 20, 20, false, true, true, true)
 	physObj.push(newObj)
 }
 
