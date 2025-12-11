@@ -77,11 +77,13 @@ class Phys {
 		if (!this.stat){
 			let isOnObjectThisCheck = false;
 		for (let other of allObjects) {
+			if (!this.AABB){
+				let radius = this.x / 2
+			}
 			let distance = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
 			if (other == this) {
 				continue
-			} else if (!this.AABB && !other.AABB &&
-						distance <= this.x + other.x) {
+			} else if (!this.AABB && distance <= this.x + other.x) {
 				this.onObject = true
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
@@ -107,7 +109,7 @@ class Phys {
 					direction.normalize()
 				}
 				this.pos.add(direction.mult(separation))
-			} else if (this.AABB && other.AABB &&
+			} else if (this.AABB &&
 						this.pos.x - this.x/2 <= other.pos.x + other.x/2 &&
 						this.pos.x + this.x/2 >= other.pos.x - other.x/2 &&
 						this.pos.y - this.y/2 <= other.pos.y + other.y/2 &&
@@ -163,7 +165,7 @@ class Phys {
 			push()
 			fill(255)
 			noStroke()
-			rect(this.pos.x, this.pos.y, this.x, this.y)
+			rect(this.pos.x, this.pos.y, this.x * 2, this.y * 2)
 			pop()
 		}
 	}

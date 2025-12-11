@@ -16,21 +16,22 @@ function setup() {
 	background(100)
 	//                width      height       rad  isCon stat, bouncy, AABB
 	//phys objects
-	player = new Phys(width / 2, height - 100, 20, 20, true, false, true, true)
+	player = new Phys(width / 2, height - 100, 10, 10, true, false, true, false)
 	physObj.push(player)
 
-	newObj = new Phys(width/2, height/2, 20, 20, false, true, true, true)
+	newObj = new Phys(width / 2, height/2, 10, 10, false, true, true, true)
 	physObj.push(newObj)
 }
 
 function draw() {
 	background(100)
+	rectMode(CENTER)
 
 	//floor
 	push()
 	stroke(0)
 	fill(0)
-	rect(0, groundY, width, 50)
+	rect(width/2, groundY+25, width, 50)
 	pop()
 
 	for (let otherObj of physObj){
